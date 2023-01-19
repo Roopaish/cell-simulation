@@ -1,3 +1,23 @@
+buttons = document.querySelectorAll(".btn");
+// loop buttons and add onclick event
+let selectedSimulation = 0;
+buttons.forEach((button, index) => {
+  console.log(button);
+  button.addEventListener("click", () => {
+    selectedSimulation = index;
+    buttons.forEach((button) => {
+      button.classList.remove("selected");
+    });
+    button.classList.add("selected");
+  });
+});
+
+simSpeedEl = document.getElementById("sim-speed");
+let speed = 0.4;
+simSpeedEl.addEventListener("input", (e) => {
+  speed = e.target.value / 100;
+});
+
 ctx = document.getElementById("life").getContext("2d");
 
 width = window.innerWidth * 0.8;
@@ -18,8 +38,8 @@ particle = (x, y, color) => {
 };
 
 random = (seed) => {
-  return Math.random() * seed - 100 + 50;
-}; // randomly set initial position of the particles from 50 to 450
+  return Math.random() * seed;
+}; // randomly set initial position of the particles from 0 to seed
 
 createParticles = (number, color) => {
   group = [];
@@ -36,7 +56,6 @@ createParticles = (number, color) => {
 // m1 * m2 = 1 (let)
 // g if positive, repulsion happens else attraction
 rule = (particles1, particles2, g) => {
-  speed = 0.2;
   for (let i = 0; i < particles1.length; i++) {
     fx = 0;
     fy = 0;
@@ -73,35 +92,69 @@ rule = (particles1, particles2, g) => {
   }
 };
 
-yellow = createParticles(200, "yellow");
-red = createParticles(300, "red");
-green = createParticles(300, "green");
+orange = createParticles(500, "orange");
+red = createParticles(500, "red");
+green = createParticles(500, "green");
+cyan = createParticles(500, "cyan");
 
-comingTogether = () => {
+s1 = () => {
   rule(red, red, 0.1);
-  rule(yellow, red, 0.15);
+  rule(orange, red, 0.15);
   rule(green, green, -0.7);
   rule(green, red, -0.2);
   rule(red, green, -0.1);
 };
 
-evolving = () => {
+bird = () => {
   rule(green, green, -0.32);
   rule(green, red, -0.17);
-  rule(green, yellow, 0.34);
+  rule(green, orange, 0.34);
   rule(red, red, -0.1);
   rule(red, green, -0.34);
-  rule(yellow, yellow, 0.15);
-  rule(yellow, green, -0.2);
+  rule(orange, orange, 0.15);
+  rule(orange, green, -0.2);
 };
 
+s2 = () => {
+  rule(green, green, 0.39);
+  rule(green, red, -0.67);
+  rule(green, orange, 0.66);
+  rule(green, cyan, -0.27);
+  rule(red, red, -0.28);
+  rule(red, green, -0.67);
+  rule(red, orange, -0.58);
+  rule(red, cyan, -0.23);
+  rule(orange, orange, -0.79);
+  rule(orange, green, -0.66);
+  rule(orange, red, -0.58);
+  rule(orange, cyan, -0.223);
+  rule(cyan, cyan, -0.06);
+  rule(cyan, green, -0.27);
+  rule(cyan, red, -0.23);
+  rule(cyan, orange, -0.223);
+};
+
+s3 = () => {
+  rule(red, red, 0.1);
+  rule(red, orange, -0.1);
+  rule(orange, orange, -0.01);
+  rule(orange, green, -0.2);
+  rule(green, red, -0.3);
+  rule(red, orange, -0.01);
+  rule(green, green, 0.01);
+};
+
+s4 = () => {};
+
+rules = [bird, s2, s1, s3, s4];
+
 update = () => {
-  evolving();
+  rules[selectedSimulation]();
   ctx.clearRect(0, 0, width, height);
   draw(0, 0, "black", null, { width: width, height: height });
   for (i = 0; i < particles.length; i++) {
     const { x, y, color } = particles[i];
-    draw(x, y, color, 5);
+    draw(x, y, color, 2);
   }
   requestAnimationFrame(update);
 };

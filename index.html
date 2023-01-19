@@ -6,20 +6,54 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Life Simulation</title>
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 90vh;
-      background-color: #1b532c;
-    }
-  </style>
+  <link rel="stylesheet" href="./styles.css" />
   <script src="./app.js" defer></script>
 </head>
 
 <body>
-  <canvas id="life"></canvas>
+  <div id="buttons" class="buttons">
+    <div class="anim-border">
+      <span>Speed</span>
+      <input type="number" value="40" id="sim-speed" class="anim-border" />
+    </div>
+    <button class="btn anim-border selected">
+      <span> </span>
+      <span> </span>
+      <span> </span>
+      <span> </span>
+      Fly
+    </button>
+    <button class="btn anim-border">
+      <span> </span>
+      <span> </span>
+      <span> </span>
+      <span> </span>
+      Pulse
+    </button>
+    <button class="btn anim-border">
+      <span> </span>
+      <span> </span>
+      <span> </span>
+      <span> </span>
+      Find
+    </button>
+    <button class="btn anim-border">
+      <span> </span>
+      <span> </span>
+      <span> </span>
+      <span> </span>
+      Wobble
+    </button>
+    <button class="btn anim-border">
+      <span> </span>
+      <span> </span>
+      <span> </span>
+      <span> </span>
+      Stop
+    </button>
+  </div>
+  <canvas id="life">
+  </canvas>
 </body>
 
 </html>
