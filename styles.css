@@ -8,7 +8,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #171618;
   gap: 24px;
 }
@@ -47,6 +47,13 @@ button.selected {
   font: 700 16px consolas;
   overflow: hidden;
   background: inherit;
+}
+
+details {
+  cursor: pointer;
+  color: #999;
+  letter-spacing: 2px;
+  font: 500 14px consolas;
 }
 
 .anim-border span:nth-child(1) {
